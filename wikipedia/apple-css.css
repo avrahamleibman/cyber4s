@@ -71,3 +71,25 @@ ul {
 a {
     text-decoration-line: none;
 }
+ .div-8 {
+    display: block;
+} 
+.div-8_2 {
+    width: 150px;
+    height: 150px;
+    border: #ffffff solid 1px;
+}
+.div-8_1 {
+    display: inline-block;
+    vertical-align: top;
+    border: #ffffff solid 1px;
+    margin: 0px;
+    width: min-content;
+    text-align: center;
+}
+img {
+    margin: 20px auto;
+}
+
+
+
