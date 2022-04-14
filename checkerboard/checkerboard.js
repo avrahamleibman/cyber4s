@@ -1,24 +1,24 @@
-// window.addEventListener("load",function() {
-//     let e_paragraph = document.createElement("p");
-//     let e_text = document.createTextNode("Hi there and greetings!");
-//     e_paragraph.appendCild(e_text);
-//     document.body.appendChild(e_paragraph);
+function abba() {
+    let eTable;
+    let eTr;
+    let eTd;
+    let j;
+    let i;
 
-// });
-
-document.body.onload = addElement;
-
-function addElement () {
-  // create a new div element
-  const newDiv = document.createElement("div");
-
-  // and give it some content
-  const newContent = document.createTextNode("Hi there and greetings!");
-
-  // add the text node to the newly created div
-  newDiv.appendChild(newContent);
-
-  // add the newly created element and its content into the DOM
-  const currentDiv = document.getElementById("div1");
-  document.body.insertBefore(newDiv, currentDiv);
+    eTable = document.createElement("table");
+    document.body.appendChild(eTable);
+    for (j = 0; j < 8; j++) {
+        eTr = document.createElement("tr");
+        eTable.appendChild(eTr);
+        for (i = 0; i < 8; i++) {
+            eTd = document.createElement("td");
+            if ( (i+j)%2 == 0) {
+                eTd.className = "white";
+            } else {
+                eTd.className = "black";
+            }
+            eTr.appendChild(eTd);
+        }
+    }
 }
+window.addEventListener("load", abba);
