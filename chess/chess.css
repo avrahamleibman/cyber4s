@@ -30,3 +30,6 @@ table {
 .selected {
     background: rgb(150, 150, 0);
 }
+.cMoves {
+    background: rgb(150, 100, 0);
+}
