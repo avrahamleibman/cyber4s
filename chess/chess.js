@@ -40,19 +40,27 @@ function fClicked(event, i,j) {
             let eTable = document.getElementsByTagName("table");
             document.body.removeChild(eTable[0]);
             fMakeTable(aDataNew);
+            oSelected.cell = undefined;
+            oSelected.locX = undefined;
+            oSelected.locY = undefined;
+            oSelected.moves = [];
             return;
         }
         oSelected.cell.classList.remove("cSelected");
         for (let loc of oSelected.moves) {
             let eTd = document.getElementById(loc[0] + "-" + loc[1]);
             eTd.classList.remove("cMoves");
-            oSelected.moves = [];
         }
+        oSelected.moves = [];
         if (oSelected.cell == event.currentTarget) {
             oSelected.cell = undefined;
+            oSelected.locX = undefined;
+            oSelected.locY = undefined;
             return;
         }
-        oSelected.cell = undefined
+        oSelected.cell = undefined;
+        oSelected.locX = undefined;
+        oSelected.locY = undefined;
     }
     if (aDataNew[i][j] != undefined) {
         oSelected.cell = event.currentTarget;
@@ -118,7 +126,7 @@ const aPieces = [
     [11, "white", "king", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/50px-Chess_klt45.svg.png",[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,-1],[-1,1]]]
 ];
 
-//objectss
+//objects
 const oSelected = {
     cell: undefined,
     locX: undefined,
