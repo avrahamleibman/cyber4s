@@ -16,7 +16,8 @@
 }
 table {
     border: 5px solid brown;
-    border-collapse: collapse;
+    background: rgb(150, 75, 0);
+    border-spacing: 3px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -27,7 +28,7 @@ table {
     top:5px;
     left:3px;
 }
-.selected {
+.cSelected {
     background: rgb(150, 150, 0);
 }
 .cMoves {
