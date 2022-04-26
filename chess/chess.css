@@ -29,7 +29,10 @@ table {
     left:3px;
 }
 .cSelected {
-    background: rgb(150, 150, 0);
+    background: hsl(60, 70%, 40%);
+}
+.cUnderCheck {
+    background: hsl(15, 100%, 29%);
 }
 .cMove {
     background: rgb(150, 100, 0);
