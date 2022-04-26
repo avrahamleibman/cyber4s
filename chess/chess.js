@@ -1,6 +1,6 @@
 
 //im my code often the first letters of a name represents type.
-//for exsample the name aplle:
+//for exsample the name apple:
 //eApple - element | fApple - function | aApple - array
 //oApple - object | cApple - class(css)
 
@@ -85,9 +85,10 @@ function fSelectCell(event, i,j) {
 
 function fGenerateMoves(y,x) {
     let result = [];
-    const side = aPieces[aDataNew[y][x]][1];
-    const piece = aPieces[aDataNew[y][x]][2];
-    const aDir = aPieces[aDataNew[y][x]][4];
+    const index = aDataNew[y][x]
+    const side = aPieces[index][1];
+    const piece = aPieces[index][2];
+    const aDir = aPieces[index][4];
     let i;
     let j;
     for (let dir of aDir) {
