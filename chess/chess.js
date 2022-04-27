@@ -32,9 +32,9 @@ function fAddIcon(i,j,eTd,data) {
     let eImg = document.createElement("img");
     eImg.src = aPieces[data[i][j]][3]; //adds source from aPieces
     eImg.className = "cPiece";
+    eImg.draggable = false;
     eTd.appendChild(eImg);
 }
-
 
 function fOnClick(event, i,j) {
     if (oSelected.cell != undefined) {
@@ -42,7 +42,7 @@ function fOnClick(event, i,j) {
             fClearSelected();
             return;
         }
-        if (event.currentTarget.classList[1] == "cMove") {
+        if (event.currentTarget.classList[1] == "cMove" || event.currentTarget.classList[1] == "cEat") {
             fMakeAMove(i,j);
             return;
         }
@@ -62,6 +62,11 @@ function fClearSelected() {
         eTd.classList.remove("cMove");
     }
     oSelected.moves = [];
+    for (let loc of oSelected.eats) {
+        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        eTd.classList.remove("cEat");
+    }
+    oSelected.eats = [];
     for (let loc of oSelected.underCheck) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.remove("cUnderCheck");
@@ -69,15 +74,19 @@ function fClearSelected() {
     oSelected.underCheck = [];
 }
 function fMakeAMove(i, j) {
-    //moves piece in data
     aDataNew[i][j] = aDataNew[oSelected.y][oSelected.x];
     aDataNew[oSelected.y][oSelected.x] = undefined;
     fClearSelected();
     vTurn = vTurn == "white" ? "black" : "white";
-    //destroys and creates a board from data
-    let eTable = document.getElementsByTagName("table");
-    eTable[0].remove();
-    fMakeBoard(aDataNew);
+    if (i == 0 && aDataNew[i][j] == 6) {
+        fPromote(i,j,7);
+        return;
+    }
+    if (i == 7 && aDataNew[i][j] == 5) {
+        fPromote(i,j,0);
+        return;
+    }
+    fRemakeBoard();
 }
 function fSelectCell(event, i,j) {
     oSelected.cell = event.currentTarget;
@@ -86,7 +95,11 @@ function fSelectCell(event, i,j) {
     oSelected.cell.classList.add("cSelected");
     for (let move of fPieceMoves(aDataNew,i,j)) {
         if (fIsMoveLegal(move)) {
-            oSelected.moves.push(move);
+            if (aDataNew[move[0]][move[1]] == undefined) {
+                oSelected.moves.push(move);
+            } else {
+                oSelected.eats.push(move);
+            }
         } else {
             oSelected.underCheck.push(move);
         }
@@ -94,6 +107,10 @@ function fSelectCell(event, i,j) {
     for (let loc of oSelected.moves) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.add("cMove");
+    }
+    for (let loc of oSelected.eats) {
+        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        eTd.classList.add("cEat");
     }
     for (let loc of oSelected.underCheck) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
@@ -149,7 +166,6 @@ function fIsMoveLegal(move) {
     let opponent = vTurn == "white" ? "black" : "white";
     return fGivesCheck(aDataTemp, opponent);
 }
-
 function fGivesCheck(aDataTemp, side) { 
     aCheck[0] = 0;
     for (let i = 0; i < 8; i++) {
@@ -164,6 +180,33 @@ function fGivesCheck(aDataTemp, side) {
     return aCheck[0] == 0;
 }
 
+function fPromote(i,j,x) {
+    const turn = vTurn;
+    vTurn = undefined;
+    console.log(turn);
+    const ePromote = document.createElement("div");
+    ePromote.className = "cPromote";
+    ePromote.id = "Promote" + "Black";
+    document.body.appendChild(ePromote);
+    let eImg;
+    for (let k = 0+x; k < 4+x; k++) {
+        eImg = document.createElement("img");
+        eImg.src = aPieces[k][3];
+        eImg.className = "cPiecePromote";
+        eImg.id = k;
+        ePromote.appendChild(eImg);
+        eImg.addEventListener("click",(event) =>{
+            aDataNew[i][j] = event.currentTarget.id
+            fRemakeBoard();
+            vTurn = turn;
+        });
+    }
+}
+function fRemakeBoard() {
+    let eTable = document.getElementsByTagName("table");
+    eTable[0].remove();
+    fMakeBoard(aDataNew);
+}
 
 //pieces location on board by index
 const aDataStart = [
@@ -204,7 +247,8 @@ const oSelected = {
     y: undefined,
     x: undefined,
     moves: [],
-    underCheck: []
+    underCheck: [],
+    eats: []
 };
 
 // ver

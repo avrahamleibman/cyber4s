@@ -3,7 +3,7 @@
     min-width: 55px;
     height: 55px;
     min-height: 55px;
-    background: rgb(200, 100, 0);
+    background: hsl(30, 100%, 39%);
     position: relative;
 }
 .black {
@@ -11,12 +11,12 @@
     min-width: 55px;
     height: 55px;
     min-height: 55px;
-    background: rgb(100, 50, 0);
+    background: hsl(30, 100%, 20%);
     position: relative;
 }
 table {
     border: 5px solid brown;
-    background: rgb(150, 75, 0);
+    background: hsl(30, 100%, 29%);
     border-spacing: 3px;
     position: absolute;
     top: 50%;
@@ -27,13 +27,30 @@ table {
     position: absolute;
     top:5px;
     left:3px;
+    user-select: none;
 }
 .cSelected {
-    background: hsl(60, 70%, 40%);
+    background: hsl(55, 80%, 50%);
 }
 .cUnderCheck {
-    background: hsl(15, 100%, 29%);
+    background-color: hsl(40, 60%, 20%);
 }
 .cMove {
     background: rgb(150, 100, 0);
+}
+.cPromote {
+    background: rgb(133, 31, 31);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cPiecePromote {
+    width: 55px;
+    height: 55px;
+    background: rgb(200, 100, 0);
+    position: relative;
+}
+.cEat {
+    background: hsl(15, 100%, 29%);
 }
