@@ -194,9 +194,11 @@ function fPromote(i,j,x) {
         eImg.src = aPieces[k][3];
         eImg.className = "cPiecePromote";
         eImg.id = k;
+        eImg.draggable = false;
         ePromote.appendChild(eImg);
         eImg.addEventListener("click",(event) =>{
             aDataNew[i][j] = event.currentTarget.id
+            ePromote.remove();
             fRemakeBoard();
             vTurn = turn;
         });
