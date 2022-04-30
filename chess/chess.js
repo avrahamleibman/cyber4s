@@ -19,6 +19,15 @@ function fMakeBoard(data) {
     }
 }
 function fRemakeBoard(data) {
+    // for (let i = 0; i < 8; i++) {
+    //     for (let j = 0; j < 8; j++) {
+    //         if (aDataTemp[i][j] != undefined) {
+    //             if (aPieces[aDataTemp[i][j]][1] == side) {
+    //                 fPieceMoves(aDataTemp,i,j);
+    //             }
+    //         }
+    //     } 
+    // }
     let eTable = document.getElementsByTagName("table");
     eTable[0].remove();
     fMakeBoard(data);
@@ -177,10 +186,8 @@ function fGivesCheck(aDataTemp, side) {
     aCheck[0] = false;
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            if (aDataTemp[i][j] != undefined) {
-                if (aPieces[aDataTemp[i][j]][1] == side) {
-                    fPieceMoves(aDataTemp,i,j);
-                }
+            if (aDataTemp[i][j] != undefined && aPieces[aDataTemp[i][j]][1] == side) {
+                fPieceMoves(aDataTemp,i,j);
             }
         } 
     }
