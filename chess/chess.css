@@ -57,6 +57,24 @@ table {
     background: rgb(200, 100, 0);
     position: relative;
 }
+.check {
+    background: rgb(150, 140, 53);
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 30px;
+}
+.stalemate {
+    background: rgb(53, 150, 145);
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 30px;
+}
 .won {
     background: rgb(53, 150, 53);
     position: absolute;
