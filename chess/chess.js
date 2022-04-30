@@ -85,11 +85,11 @@ function fMakeAMove(i, j) {
     aDataNew[oSelected.y][oSelected.x] = undefined;
     fClearSelected();
     vTurn = vTurn == "white" ? "black" : "white";
-    if (i == 0 && aDataNew[i][j] == 6) {
+    if (i == 0 && aPieces[aDataNew[i][j]][2] == "pawn") {
         fPromote(i,j,7);
         return;
     }
-    if (i == 7 && aDataNew[i][j] == 5) {
+    if (i == 7 && aPieces[aDataNew[i][j]][2] == "pawn") {
         fPromote(i,j,0);
         return;
     }
