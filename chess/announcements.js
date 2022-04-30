@@ -24,7 +24,7 @@ function fAnnouncement(){
 }
 
 function fCanMove(side) {
-    sideMoves = [];
+    let sideMoves = [];
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (aDataNew[i][j] != undefined && aPieces[aDataNew[i][j]][1] == side) {

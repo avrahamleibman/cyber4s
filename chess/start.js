@@ -79,7 +79,6 @@ const oSelected = {
 // game states
 let vTurn = "white";
 const aCheck = [false];
-let sideMoves = [];
 
 //load
 window.addEventListener("load", () => {
