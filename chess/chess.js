@@ -19,15 +19,7 @@ function fMakeBoard(data) {
     }
 }
 function fRemakeBoard(data) {
-    // for (let i = 0; i < 8; i++) {
-    //     for (let j = 0; j < 8; j++) {
-    //         if (aDataTemp[i][j] != undefined) {
-    //             if (aPieces[aDataTemp[i][j]][1] == side) {
-    //                 fPieceMoves(aDataTemp,i,j);
-    //             }
-    //         }
-    //     } 
-    // }
+    fIsLost(vTurn);
     let eTable = document.getElementsByTagName("table");
     eTable[0].remove();
     fMakeBoard(data);
@@ -218,6 +210,36 @@ function fPromote(i,j,x) {
     }
 }
 
+function fIsLost(side) {
+    sideMoves = [];
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if (aDataNew[i][j] != undefined && aPieces[aDataNew[i][j]][1] == vTurn) {
+                oSelected.y = i;
+                oSelected.x = j;
+                for (let move of fPieceMoves(aDataNew,i,j)) {
+                    if (fIsMoveLegal(move)) {
+                        sideMoves.push(move);
+                    }
+                }
+            }
+        } 
+    }
+    oSelected.y = undefined;
+    oSelected.x = undefined;
+    let opponent = side == "white" ? "black" : "white";
+    if (sideMoves.length == 0) {
+        fWin(opponent);
+    }
+}
+function fWin(side) {
+    let eWon = document.createElement("div");
+    document.body.appendChild(eWon);
+    eWon.className ="won";
+    eWon.innerText = "chackmate! " + side + " has won"
+    console.log(side + " has won")
+}
+
 //pieces location on board by index
 const aDataStart = [
     [0,1,2,3,4,2,1,0],
@@ -264,6 +286,7 @@ const oSelected = {
 // game states
 let vTurn = "white";
 const aCheck = [false];
+let sideMoves = [];
 
 //load
 window.addEventListener("load", () => {
