@@ -1,11 +1,9 @@
 
-//im my code often the first letters of a name represents type.
+//im my code the first letters of global variable or function represents its type.
 //for exsample the name apple:
-//eApple - element | fApple - function | aApple - array
-//oApple - object | cApple - class(css)
+//eApple - element | fApple - function | vApple - variable
+//aApple - array | oApple - object
 
-// aDataNew[a][b] is an index of a piece
-// aPieces[ aDataNew[a][b] ][c] is some property of that piece
 
 function fMakeBoard(data) {
     const eTable = document.createElement("table");
@@ -20,29 +18,34 @@ function fMakeBoard(data) {
         }
     }
 }
+function fRemakeBoard(data) {
+    let eTable = document.getElementsByTagName("table");
+    eTable[0].remove();
+    fMakeBoard(data);
+}
 function fCellProperties(i,j,eTd,data) {
-    eTd.className = (i+j)%2 == 0 ? "white" : "black";
+    eTd.className = (i+j)%2 == 0 ? "white" : "black"; // sets alternating classes
     eTd.id = i + "-" + j;
-    if (data[i][j] != undefined) {//check if there is a piece in location
+    if (data[i][j] != undefined) { //checks if there is a piece in location
         fAddIcon(i,j,eTd,data);
     }
     eTd.addEventListener("click", (event) => fOnClick(event,i,j));
 }
 function fAddIcon(i,j,eTd,data) {
     let eImg = document.createElement("img");
-    eImg.src = aPieces[data[i][j]][3]; //adds source from aPieces
-    eImg.className = "cPiece";
-    eImg.draggable = false;
     eTd.appendChild(eImg);
+    eImg.src = aPieces[data[i][j]][3]; //adds source from aPieces
+    eImg.className = "piece";
+    eImg.draggable = false;
 }
 
 function fOnClick(event, i,j) {
     if (oSelected.cell != undefined) {
-        if (event.currentTarget.classList[1] == "cSelected") {
+        if (event.currentTarget.classList[1] == "selected") {
             fClearSelected();
             return;
         }
-        if (event.currentTarget.classList[1] == "cMove" || event.currentTarget.classList[1] == "cEat") {
+        if (event.currentTarget.classList[1] == "move" || event.currentTarget.classList[1] == "eat") {
             fMakeAMove(i,j);
             return;
         }
@@ -53,23 +56,27 @@ function fOnClick(event, i,j) {
     }
 }
 function fClearSelected() {
-    oSelected.cell.classList.remove("cSelected");
+    // clears selected cell
+    oSelected.cell.classList.remove("selected");
     oSelected.cell = undefined;
     oSelected.y = undefined;
     oSelected.x = undefined;
+    // clears selected moves
     for (let loc of oSelected.moves) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.remove("cMove");
+        eTd.classList.remove("move");
     }
     oSelected.moves = [];
+    // clears selected captures
     for (let loc of oSelected.eats) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.remove("cEat");
+        eTd.classList.remove("eat");
     }
     oSelected.eats = [];
+    // clears selected illegal moves
     for (let loc of oSelected.underCheck) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.remove("cUnderCheck");
+        eTd.classList.remove("underCheck");
     }
     oSelected.underCheck = [];
 }
@@ -86,13 +93,13 @@ function fMakeAMove(i, j) {
         fPromote(i,j,0);
         return;
     }
-    fRemakeBoard();
+    fRemakeBoard(aDataNew);
 }
 function fSelectCell(event, i,j) {
     oSelected.cell = event.currentTarget;
     oSelected.y = i;
     oSelected.x = j;
-    oSelected.cell.classList.add("cSelected");
+    oSelected.cell.classList.add("selected");
     for (let move of fPieceMoves(aDataNew,i,j)) {
         if (fIsMoveLegal(move)) {
             if (aDataNew[move[0]][move[1]] == undefined) {
@@ -106,15 +113,15 @@ function fSelectCell(event, i,j) {
     }
     for (let loc of oSelected.moves) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.add("cMove");
+        eTd.classList.add("move");
     }
     for (let loc of oSelected.eats) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.add("cEat");
+        eTd.classList.add("eat");
     }
     for (let loc of oSelected.underCheck) {
         let eTd = document.getElementById(loc[0] + "-" + loc[1]);
-        eTd.classList.add("cUnderCheck");
+        eTd.classList.add("underCheck");
     }
 }
 
@@ -134,8 +141,8 @@ function fPieceMoves(data,y,x) {
                 if (aPieces[data[y+i][x+j]][1] != side) { //can capture if enemy piece
                     if (piece != "pawn" || j != 0) { //pawn can't capture ahead
                         result.push([y+i,x+j]); //capure
-                        if (data[y+i][x+j] == 4 || data[y+i][x+j] == 11) { //capured piece is enemy king
-                            aCheck[0] = 1; //king is under check
+                        if (aPieces[data[y+i][x+j]][2] == "king") { //capured piece is enemy king
+                            aCheck[0] = true; //king is under check
                         }
                     }
                 }
@@ -164,10 +171,10 @@ function fIsMoveLegal(move) {
     aDataTemp[oSelected.y][oSelected.x] = undefined;
     //is king in check after the move?
     let opponent = vTurn == "white" ? "black" : "white";
-    return fGivesCheck(aDataTemp, opponent);
+    return ! fGivesCheck(aDataTemp, opponent);
 }
 function fGivesCheck(aDataTemp, side) { 
-    aCheck[0] = 0;
+    aCheck[0] = false;
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (aDataTemp[i][j] != undefined) {
@@ -177,7 +184,7 @@ function fGivesCheck(aDataTemp, side) {
             }
         } 
     }
-    return aCheck[0] == 0;
+    return aCheck[0];
 }
 
 function fPromote(i,j,x) {
@@ -185,29 +192,23 @@ function fPromote(i,j,x) {
     vTurn = undefined;
     console.log(turn);
     const ePromote = document.createElement("div");
-    ePromote.className = "cPromote";
-    ePromote.id = "Promote" + "Black";
+    ePromote.className = "promote";
     document.body.appendChild(ePromote);
     let eImg;
     for (let k = 0+x; k < 4+x; k++) {
         eImg = document.createElement("img");
         eImg.src = aPieces[k][3];
-        eImg.className = "cPiecePromote";
+        eImg.className = "piecePromote";
         eImg.id = k;
         eImg.draggable = false;
         ePromote.appendChild(eImg);
         eImg.addEventListener("click",(event) =>{
             aDataNew[i][j] = event.currentTarget.id
             ePromote.remove();
-            fRemakeBoard();
+            fRemakeBoard(aDataNew);
             vTurn = turn;
         });
     }
-}
-function fRemakeBoard() {
-    let eTable = document.getElementsByTagName("table");
-    eTable[0].remove();
-    fMakeBoard(aDataNew);
 }
 
 //pieces location on board by index
@@ -253,9 +254,9 @@ const oSelected = {
     eats: []
 };
 
-// ver
+// game states
 let vTurn = "white";
-const aCheck = [0];
+const aCheck = [false];
 
 //load
 window.addEventListener("load", () => {

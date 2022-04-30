@@ -1,3 +1,13 @@
+
+table {
+    border: 5px solid brown;
+    background: hsl(30, 100%, 29%);
+    border-spacing: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .white {
     width: 55px;
     min-width: 55px;
@@ -14,43 +24,36 @@
     background: hsl(30, 100%, 20%);
     position: relative;
 }
-table {
-    border: 5px solid brown;
-    background: hsl(30, 100%, 29%);
-    border-spacing: 3px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.cPiece {
+.piece {
     position: absolute;
     top:5px;
     left:3px;
     user-select: none;
 }
-.cSelected {
+.selected {
     background: hsl(55, 80%, 50%);
 }
-.cUnderCheck {
-    background-color: hsl(40, 60%, 20%);
-}
-.cMove {
+.move {
     background: rgb(150, 100, 0);
 }
-.cPromote {
+.eat {
+    background: hsl(15, 100%, 29%);
+}
+.underCheck {
+    background-color: hsl(40, 60%, 20%);
+}
+.promote {
+    height: 55px;
     background: rgb(133, 31, 31);
+    border: 3px solid rgb(133, 31, 31);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.cPiecePromote {
+.piecePromote {
     width: 55px;
     height: 55px;
     background: rgb(200, 100, 0);
     position: relative;
-}
-.cEat {
-    background: hsl(15, 100%, 29%);
 }
