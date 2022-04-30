@@ -181,25 +181,27 @@ function fGivesCheck(data, side) {
 }
 
 function fPromote(i,j,x) {
+    //pause game while promotion
     const turn = vTurn;
     vTurn = undefined;
-    console.log(turn);
+    // creates promotion display
     const ePromote = document.createElement("div");
     ePromote.className = "promote";
     document.body.appendChild(ePromote);
-    let eImg;
+    // creates promotion options
     for (let k = 0+x; k < 4+x; k++) {
-        eImg = document.createElement("img");
+        let eImg = document.createElement("img");
         eImg.src = aPieces[k][3];
         eImg.className = "piecePromote";
         eImg.id = k;
         eImg.draggable = false;
         ePromote.appendChild(eImg);
+        // onClick make promotion and resume game
         eImg.addEventListener("click",(event) =>{
             aDataNew[i][j] = event.currentTarget.id
             ePromote.remove();
-            fRemakeBoard(aDataNew);
             vTurn = turn;
+            fRemakeBoard(aDataNew);
         });
     }
 }
@@ -270,7 +272,7 @@ function fChackmate() {
 //pieces location on board by index
 const aDataStart = [
     [0,1,2,3,4,2,1,0],
-    [5,5,5,5,5,5,5,5],
+    [5,5,5,5,5,5,6,5],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined],
