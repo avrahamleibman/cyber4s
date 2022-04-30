@@ -6,7 +6,7 @@
 
 function fAnnouncement(){
     //remove check announcement
-    let eCheck = document.getElementsByClassName("check");
+    const eCheck = document.getElementsByClassName("check");
     if (eCheck[0] != undefined) eCheck[0].remove();
     //make announcement check/mate/Stalemate
     let opponent = vTurn == "white" ? "black" : "white";
@@ -24,7 +24,7 @@ function fAnnouncement(){
 }
 
 function fCanMove(side) {
-    let sideMoves = [];
+    const sideMoves = [];
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (aDataNew[i][j] != undefined && aPieces[aDataNew[i][j]][1] == side) {
@@ -47,20 +47,20 @@ function fCanMove(side) {
 }
 
 function fCheck() {
-    let eCheck = document.createElement("div");
+    const eCheck = document.createElement("div");
     document.body.appendChild(eCheck);
     eCheck.className ="check";
     eCheck.innerText = "chack!";
 }
 function fStalemate() {
-    let eStaleMate = document.createElement("div");
+    const eStaleMate = document.createElement("div");
     document.body.appendChild(eStaleMate);
     eStaleMate.className ="stalemate";
     eStaleMate.innerText = "stalemate!";
 }
 function fChackmate() {
-    let eWon = document.createElement("div");
-    document.body.appendChild(eWon);
-    eWon.className ="won";
-    eWon.innerText = "chackmate!";
+    const eCheckmate = document.createElement("div");
+    document.body.appendChild(eCheckmate);
+    eCheckmate.className ="checkmate";
+    eCheckmate.innerText = "chackmate!";
 }

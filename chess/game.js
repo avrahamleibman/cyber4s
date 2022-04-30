@@ -29,19 +29,19 @@ function fClearSelected() {
     oSelected.x = undefined;
     // clears selected moves
     for (let loc of oSelected.moves) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.remove("move");
     }
     oSelected.moves = [];
     // clears selected captures
     for (let loc of oSelected.eats) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.remove("eat");
     }
     oSelected.eats = [];
     // clears selected illegal moves
     for (let loc of oSelected.underCheck) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.remove("underCheck");
     }
     oSelected.underCheck = [];
@@ -81,15 +81,15 @@ function fSelectCell(event, i,j) {
     }
     //add css classes fot each category
     for (let loc of oSelected.moves) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.add("move");
     }
     for (let loc of oSelected.eats) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.add("eat");
     }
     for (let loc of oSelected.underCheck) {
-        let eTd = document.getElementById(loc[0] + "-" + loc[1]);
+        const eTd = document.getElementById(loc[0] + "-" + loc[1]);
         eTd.classList.add("underCheck");
     }
 }
@@ -166,7 +166,7 @@ function fPromote(i,j,x) {
     document.body.appendChild(ePromote);
     // creates promotion options
     for (let k = 0+x; k < 4+x; k++) {
-        let eImg = document.createElement("img");
+        const eImg = document.createElement("img");
         eImg.src = aPieces[k][3];
         eImg.className = "piecePromote";
         eImg.id = k;
@@ -186,7 +186,7 @@ function fPromote(i,j,x) {
 function fRemakeBoard(data) {
     fAnnouncement();
     //remakes the board
-    let eTable = document.getElementsByTagName("table");
+    const eTable = document.getElementsByTagName("table");
     eTable[0].remove();
     fMakeBoard(data);
 }

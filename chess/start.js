@@ -8,10 +8,10 @@ function fMakeBoard(data) {
     const eTable = document.createElement("table");
     document.body.appendChild(eTable);
     for (let i = 0; i < 8; i++) {
-        let eTr = document.createElement("tr");
+        const eTr = document.createElement("tr");
         eTable.appendChild(eTr);
         for (let j = 0; j < 8; j++) {
-            let eTd = document.createElement("td");
+            const eTd = document.createElement("td");
             eTr.appendChild(eTd);
             fCellProperties(i,j,eTd,data);
         }
@@ -26,7 +26,7 @@ function fCellProperties(i,j,eTd,data) {
     eTd.addEventListener("click", (event) => fOnClick(event,i,j));
 }
 function fAddIcon(i,j,eTd,data) {
-    let eImg = document.createElement("img");
+    const eImg = document.createElement("img");
     eTd.appendChild(eImg);
     eImg.src = aPieces[data[i][j]][3]; //adds source from aPieces
     eImg.className = "piece";
